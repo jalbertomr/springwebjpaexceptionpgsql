@@ -17,5 +17,5 @@ public interface IPersonService {
 	
 	public List<Person> getByAge(String age);
 	
-	public void deleteById(Long id);
+	public Person deleteById(Long id);
 }
