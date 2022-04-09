@@ -4,6 +4,7 @@ Application of person with operations CRUD using JPARepository with exception ha
 
 #### Exceptions
 
+Using Custom Exception handling
 Exceptions at Controller and Business level
 
 Business Level
@@ -22,6 +23,9 @@ Controller Level
   PersonController
   validate fields create ControllerException to just be attached to the ResponseEntity<ControllerException>(HttpStatus.BAD_REQUEST)
 
+  Person entity
+    field property @Column(nullable = false) on lastName is covered.
+    
 #### Person Entity
 
 Long   id

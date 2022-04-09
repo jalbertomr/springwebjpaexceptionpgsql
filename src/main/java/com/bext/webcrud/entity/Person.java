@@ -1,5 +1,6 @@
 package com.bext.webcrud.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +17,7 @@ public class Person {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String firstName;
+	@Column( nullable = false)
 	private String lastName;
 	private int age;
 }
