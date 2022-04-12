@@ -1,6 +1,7 @@
 package com.bext.webcrud.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bext.webcrud.entity.Person;
+import com.bext.webcrud.exception.EmptyInputException;
 import com.bext.webcrud.service.IPersonService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,45 +36,46 @@ public class PersonController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Person> getByid(@PathVariable Long id){
-		Person person = iPersonService.getById(id);
-		return new ResponseEntity<Person>( person, HttpStatus.OK);
+	public ResponseEntity<Optional<Person>> getByid(@PathVariable Long id){
+		Optional<Person> person = iPersonService.getById(id);
+		return new ResponseEntity<Optional<Person>>( person, person.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
 	}
 	
 	@GetMapping("/firstname/{firstname}")
 	public ResponseEntity<List<Person>> getByFirstName(@PathVariable("firstname") String firstName){
 		List<Person> persons = (List<Person>) iPersonService.getByFirstName(firstName);
-		return new ResponseEntity<List<Person>>( persons, HttpStatus.OK);
+		return new ResponseEntity<List<Person>>( persons, persons.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
 	}
 
 	@GetMapping("/lastname/{lastname}")
 	public ResponseEntity<List<Person>> getByLastName(@PathVariable("lastname") String lastName){
 		List<Person> persons = (List<Person>) iPersonService.getByLastName(lastName);
-		return new ResponseEntity<List<Person>>( persons, HttpStatus.OK);
+		return new ResponseEntity<List<Person>>( persons, persons.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
 	}
 	
 	@GetMapping("/age/{age}")
 	public ResponseEntity<List<Person>> getByAge(@PathVariable("age") String age){
 		List<Person> persons = (List<Person>) iPersonService.getByAge(age);
-		return new ResponseEntity<List<Person>>( persons, HttpStatus.OK);
+		return new ResponseEntity<List<Person>>( persons, persons.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> geleteById(@PathVariable Long id){
-		iPersonService.deleteById(id);
-		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+	public ResponseEntity<Optional<Person>> deleteById(@PathVariable Long id){
+		Optional<Person> personDeleted = iPersonService.deleteById(id);
+		return new ResponseEntity<Optional<Person>>(personDeleted, personDeleted.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
 	}
 	
 	@PostMapping
 	public ResponseEntity<Person> addPerson(@RequestBody Person person){
+		person.setId(null); 
 		Person newPerson = iPersonService.addPerson( person);
 		return new ResponseEntity<Person>( newPerson, HttpStatus.CREATED);
 	}
 	
 	@PutMapping
-	public ResponseEntity<Person> updatePerson(@RequestBody Person person){
-		Person updatedPerson = iPersonService.addPerson(person);
-		return new ResponseEntity<Person>( updatedPerson, HttpStatus.ACCEPTED);
+	public ResponseEntity<Optional<Person>> updatePerson(@RequestBody Person person){
+		Optional<Person> updatedPerson = iPersonService.updatePerson(person);
+		return new ResponseEntity<Optional<Person>>( updatedPerson, (updatedPerson.isEmpty()) ? HttpStatus.NOT_FOUND : HttpStatus.OK);
 	}
 	
 }
