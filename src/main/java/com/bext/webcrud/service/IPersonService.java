@@ -19,4 +19,6 @@ public interface IPersonService {
 	public List<Person> getByAge(String age);
 	
 	public Optional<Person> deleteById(Long id);
+
+	public Optional<Person> updatePerson(Person person);
 }

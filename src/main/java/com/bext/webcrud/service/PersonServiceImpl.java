@@ -66,13 +66,33 @@ public class PersonServiceImpl implements IPersonService {
 		}
 	}
 
+	@Override
+	public Optional<Person> updatePerson(Person person) {
+		if (person.getFirstName() == null) {
+			throw new BusinessException("601", "FirstName cannot be null");
+		}
+		if (person.getFirstName().isEmpty() || person.getFirstName().strip().length() == 0 ) {
+			throw new BusinessException("601", "FirstName cannot be empty");
+		}
+		try {
+		Optional<Person> retPerson = Optional.empty();
+		if (getById(person.getId()).isPresent()) {
+			retPerson = Optional.of(person);
+			personJpaRepo.save(person);
+		}
+		return retPerson;
+		} catch (Exception e) {
+			throw new BusinessException("60X","Exception on Person updatePerson");
+		}
+	}
+	
 	@SuppressWarnings("finally")
 	@Override
 	public Optional<Person> deleteById(Long id) {
-		Optional<Person> person = null ;
+		Optional<Person> person = Optional.empty() ;
         try {
         	person = this.getById(id);
-        	personJpaRepo.deleteById(id);
+        	if (person.isPresent()) { personJpaRepo.deleteById(id); }
         	return person;
 		} catch (IllegalArgumentException e) {
 			throw new BusinessException("608","Person Id cannot be null " + e.getMessage());

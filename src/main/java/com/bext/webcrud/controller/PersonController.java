@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,14 +35,14 @@ public class PersonController {
 	@GetMapping
 	public ResponseEntity<List<Person>> getAll() {
 		List<Person> persons = iPersonService.getAllPersons();
-		return new ResponseEntity<List<Person>>(persons, HttpStatus.OK);
+		return new ResponseEntity<List<Person>>(persons, persons.size() == 0 ? HttpStatus.NOT_FOUND : HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getByid(@PathVariable Long id) {
 		try {
 			Optional<Person> person = iPersonService.getById(id);
-			return new ResponseEntity<Optional<Person>>(person, HttpStatus.OK);
+			return new ResponseEntity<Optional<Person>>(person, person.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
 		} catch (BusinessException e) {
 			ControllerException ce = new ControllerException(e.getErrorCode(), e.getErrorMessage());
 			return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
@@ -53,25 +55,25 @@ public class PersonController {
 	@GetMapping("/firstname/{firstname}")
 	public ResponseEntity<List<Person>> getByFirstName(@PathVariable("firstname") String firstName) {
 		List<Person> persons = (List<Person>) iPersonService.getByFirstName(firstName);
-		return new ResponseEntity<List<Person>>(persons, HttpStatus.OK);
+		return new ResponseEntity<List<Person>>(persons, persons.size() == 0 ? HttpStatus.NOT_FOUND : HttpStatus.OK);
 	}
 
 	@GetMapping("/lastname/{lastname}")
 	public ResponseEntity<List<Person>> getByLastName(@PathVariable("lastname") String lastName) {
 		List<Person> persons = (List<Person>) iPersonService.getByLastName(lastName);
-		return new ResponseEntity<List<Person>>(persons, HttpStatus.OK);
+		return new ResponseEntity<List<Person>>(persons, persons.size() == 0 ? HttpStatus.NOT_FOUND : HttpStatus.OK);
 	}
 
 	@GetMapping("/age/{age}")
 	public ResponseEntity<List<Person>> getByAge(@PathVariable("age") String age) {
 		List<Person> persons = (List<Person>) iPersonService.getByAge(age);
-		return new ResponseEntity<List<Person>>(persons, HttpStatus.OK);
+		return new ResponseEntity<List<Person>>(persons, persons.size() == 0 ? HttpStatus.NOT_FOUND : HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Optional<Person>> geleteById(@PathVariable Long id) {
 		Optional<Person> person = iPersonService.deleteById(id);
-		return new ResponseEntity<Optional<Person>>(person, HttpStatus.ACCEPTED);
+		return new ResponseEntity<Optional<Person>>(person, person.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.ACCEPTED);
 	}
 
 	@PostMapping
@@ -99,8 +101,8 @@ public class PersonController {
 			return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
 		}
 		try {
-			Person updatedPerson = iPersonService.addPerson(person);
-			return new ResponseEntity<Person>(updatedPerson, HttpStatus.ACCEPTED);
+			Optional<Person> updatedPerson = iPersonService.updatePerson(person);
+			return new ResponseEntity<Optional<Person>>(updatedPerson, updatedPerson.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.ACCEPTED);
 		} catch (BusinessException e) {
 			ControllerException ce = new ControllerException(e.getErrorCode(), e.getErrorMessage());
 			return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
@@ -110,4 +112,10 @@ public class PersonController {
 		}
 	}
 
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ResponseEntity<String> handleHttpMessageNotReadable(HttpMessageNotReadableException hmnre) {
+		return new ResponseEntity("Incorrect Body in request", HttpStatus.BAD_REQUEST);
+		
+	}
+	
 }
