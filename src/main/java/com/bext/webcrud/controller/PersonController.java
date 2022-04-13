@@ -115,7 +115,6 @@ public class PersonController {
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ResponseEntity<String> handleHttpMessageNotReadable(HttpMessageNotReadableException hmnre) {
 		return new ResponseEntity("Incorrect Body in request", HttpStatus.BAD_REQUEST);
-		
 	}
 	
 }

@@ -26,6 +26,17 @@ Controller Level
   Person entity
     field property @Column(nullable = false) on lastName is covered.
     
+  To Validate the body on the request use a exceptionhandler in the controller with annotation 
+  
+    	@ExceptionHandler(HttpMessageNotReadableException.class)
+	     public ResponseEntity<String> handleHttpMessageNotReadable(HttpMessageNotReadableException hmnre) {
+		  return new ResponseEntity("Incorrect Body in request", HttpStatus.BAD_REQUEST);
+	   }
+ 
+ This way many try-catch validations are present to minimize the code use @ControllerAdvice as used on this repo branch 
+ [GlobalExceptionHandling](https://github.com/jalbertomr/springwebjpaexceptionpgsql/tree/GlobalExceptionsHandling).
+ also @ControllerAdvice can share the variable buffer between Controllers for @initBind, @ModelAttribute
+    
 #### Person Entity
 
 Long   id

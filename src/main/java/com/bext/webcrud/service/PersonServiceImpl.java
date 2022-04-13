@@ -13,10 +13,10 @@ import com.bext.webcrud.repo.PersonJpaRepository;
 
 @Service
 public class PersonServiceImpl implements IPersonService {
-	
-    @Autowired
+
+	@Autowired
 	private PersonJpaRepository personJpaRepo;
-	
+
 	@Override
 	public List<Person> getAllPersons() {
 		return personJpaRepo.findAll();
@@ -24,12 +24,12 @@ public class PersonServiceImpl implements IPersonService {
 
 	@Override
 	public Optional<Person> getById(Long id) {
-        try {
+		try {
 			return personJpaRepo.findById(id);
 		} catch (org.springframework.dao.InvalidDataAccessApiUsageException e) {
-		    throw new BusinessException("606","Person findById id cannot be null " + e.getMessage());	
+			throw new BusinessException("606", "Person findById id cannot be null " + e.getMessage());
 		} catch (Exception e) {
-			throw new BusinessException("ExServPeGetById","Exception on Service Person getById " + e.getMessage());
+			throw new BusinessException("ExServPeGetById", "Exception on Service Person getById " + e.getMessage());
 		}
 	}
 
@@ -53,7 +53,7 @@ public class PersonServiceImpl implements IPersonService {
 		if (person.getFirstName() == null) {
 			throw new BusinessException("601", "FirstName cannot be null");
 		}
-		if (person.getFirstName().isEmpty() || person.getFirstName().strip().length() == 0 ) {
+		if (person.getFirstName().isEmpty() || person.getFirstName().strip().length() == 0) {
 			throw new BusinessException("601", "FirstName cannot be empty");
 		}
 		try {
@@ -71,38 +71,38 @@ public class PersonServiceImpl implements IPersonService {
 		if (person.getFirstName() == null) {
 			throw new BusinessException("601", "FirstName cannot be null");
 		}
-		if (person.getFirstName().isEmpty() || person.getFirstName().strip().length() == 0 ) {
+		if (person.getFirstName().isEmpty() || person.getFirstName().strip().length() == 0) {
 			throw new BusinessException("601", "FirstName cannot be empty");
 		}
 		try {
-		Optional<Person> retPerson = Optional.empty();
-		if (getById(person.getId()).isPresent()) {
-			retPerson = Optional.of(person);
-			personJpaRepo.save(person);
-		}
-		return retPerson;
+			Optional<Person> retPerson = Optional.empty();
+			if (getById(person.getId()).isPresent()) {
+				retPerson = Optional.of(person);
+				personJpaRepo.save(person);
+			}
+			return retPerson;
 		} catch (Exception e) {
-			throw new BusinessException("60X","Exception on Person updatePerson");
-		}
-	}
-	
-	@SuppressWarnings("finally")
-	@Override
-	public Optional<Person> deleteById(Long id) {
-		Optional<Person> person = Optional.empty() ;
-        try {
-        	person = this.getById(id);
-        	if (person.isPresent()) { personJpaRepo.deleteById(id); }
-        	return person;
-		} catch (IllegalArgumentException e) {
-			throw new BusinessException("608","Person Id cannot be null " + e.getMessage());
-		} catch (NoSuchElementException e) {
-			throw new BusinessException("609", "Person id does not exist on Database " + e.getMessage());
-		} catch (Exception e) {
-			throw new BusinessException("ExPeServDelById","Exception on Person Service deleteleById");
+			throw new BusinessException("60X", "Exception on Person updatePerson");
 		}
 	}
 
-	
+	@SuppressWarnings("finally")
+	@Override
+	public Optional<Person> deleteById(Long id) {
+		Optional<Person> person = Optional.empty();
+		try {
+			person = this.getById(id);
+			if (person.isPresent()) {
+				personJpaRepo.deleteById(id);
+			}
+			return person;
+		} catch (IllegalArgumentException e) {
+			throw new BusinessException("608", "Person Id cannot be null " + e.getMessage());
+		} catch (NoSuchElementException e) {
+			throw new BusinessException("609", "Person id does not exist on Database " + e.getMessage());
+		} catch (Exception e) {
+			throw new BusinessException("ExPeServDelById", "Exception on Person Service deleteleById");
+		}
+	}
 
 }
