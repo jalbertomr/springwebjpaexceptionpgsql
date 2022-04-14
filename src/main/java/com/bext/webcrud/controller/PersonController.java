@@ -22,9 +22,6 @@ import com.bext.webcrud.exception.BusinessException;
 import com.bext.webcrud.exception.ControllerException;
 import com.bext.webcrud.service.IPersonService;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @RestController
 @RequestMapping("/persons")
 public class PersonController {
@@ -115,6 +112,11 @@ public class PersonController {
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ResponseEntity<String> handleHttpMessageNotReadable(HttpMessageNotReadableException hmnre) {
 		return new ResponseEntity("Incorrect Body in request", HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<String> handlePSQL(Exception e){
+		return new ResponseEntity<String>("Error - " + e.getLocalizedMessage() + e.getCause(), HttpStatus.METHOD_FAILURE );
 	}
 	
 }
