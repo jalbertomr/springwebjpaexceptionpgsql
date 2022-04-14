@@ -32,7 +32,7 @@ public class PersonController {
 	@GetMapping
 	public ResponseEntity<List<Person>> getAll() {
 		List<Person> persons = iPersonService.getAllPersons();
-		return new ResponseEntity<List<Person>>( persons, HttpStatus.OK);
+		return new ResponseEntity<List<Person>>( persons, persons.size() == 0 ? HttpStatus.NOT_FOUND : HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")

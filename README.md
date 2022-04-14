@@ -2,6 +2,12 @@
 
 Application of person with operations CRUD using JPARepository with Global Exception handling
 
+## Profiles Used
+
+  h2Initdata
+  pgsqlInitdata
+  
+
 #### Exceptions
 
 With use of a Global Exception Hangler, the many try-catch on many levels like business level, service level...
