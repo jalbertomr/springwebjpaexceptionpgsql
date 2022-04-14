@@ -1,3 +1,3 @@
-INSERT INTO `person_jpa` ( `id`,`first_name`, `last_name`, `age`, `integer`) VALUES 
-( 1,'Beto','Martinez',10, 101),
-( 2,'Juan','Martinez',10, 101);
+INSERT INTO person_jpa ( first_name, last_name, age, integer) VALUES 
+( 'Beto','data.sql',10, 101),
+( 'Lucy','data.sql',10, 101);

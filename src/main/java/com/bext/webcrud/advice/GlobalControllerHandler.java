@@ -38,13 +38,18 @@ public class GlobalControllerHandler extends ResponseEntityExceptionHandler{
 	}
 	
 	@ExceptionHandler(NoSuchElementException.class)
-	public ResponseEntity<String> hadleNoSuchElement(NoSuchElementException nsee){
+	public ResponseEntity<String> handleNoSuchElement(NoSuchElementException nsee){
 		return new ResponseEntity<String>("Error - " + nsee.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(PropertyValueException.class)
-	public ResponseEntity<String> hadlePropertyValue(PropertyValueException pve){
+	public ResponseEntity<String> handlePropertyValue(PropertyValueException pve){
 		return new ResponseEntity<String>("Error - " + pve.getMessage(), HttpStatus.BAD_REQUEST);
 	}
-	
+	/*
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<String> handlePSQL(Exception e){
+		return new ResponseEntity<String>("Error - " + e.getLocalizedMessage(), HttpStatus.METHOD_FAILURE );
+	}
+	*/
 }

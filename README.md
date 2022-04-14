@@ -7,11 +7,30 @@ Application of person with operations CRUD using JPARepository with Global Excep
   h2Initdata
   pgsqlInitdata
   
+###  Using profile h2InitData then files used
+  
+  application.properties
+  application-h2InitData.properties
+  data.sql
+  data-h2.sql
+  schema-h2.sql
+  
+  In properties file is configured spring.sql.init.platform=h2
+  
+###  Using profile pgsqlInitdata then files used
+  
+  application.properties
+  application-pgsqlInitdata.properties
+  data.sql
+  data-postgres.sql
+  schema-postgres.sql
+  
+  In properties file is configured spring.sql.init.platform=postgres
 
 #### Exceptions
 
 With use of a Global Exception Hangler, the many try-catch on many levels like business level, service level...
-can be eliminated and managed in only one place, a class with annotation @ControllerAdvice managind the exceptions 
+can be eliminated and managed in only one place, a class with annotation @ControllerAdvice managing the exceptions 
 in an global way, returning a controlled ResponseEntity to the client.
 
 @ControllerAdvice
@@ -46,4 +65,12 @@ public class GlobalControllerHandler extends ResponseEntityExceptionHandler{
 }
 
 
-####
+#### Create / init Database
+
+    spring.sql.init.mode = never             // does not execute data.sql,schema.sql files 
+    spring.jpa.hibernate.ddl-auto = none    // does not create database automatically
+
+    spring.sql.init.mode = always            // does not execute data.sql,schema.sql files 
+    spring.jpa.hibernate.ddl-auto = none    // does not create database automatically
+
+The sql scripts for tables include the sequence for the primary keys
