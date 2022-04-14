@@ -37,6 +37,14 @@ Controller Level
  [GlobalExceptionHandling](https://github.com/jalbertomr/springwebjpaexceptionpgsql/tree/GlobalExceptionsHandling).
  also @ControllerAdvice can share the variable buffer between Controllers for @initBind, @ModelAttribute
     
+ To catch a Exception
+ 
+    @ExceptionHandler(Exception.class)
+	 public ResponseEntity<String> handlePSQL(Exception e){
+      return new ResponseEntity<String>("Error - " + e.getLocalizedMessage() 
+      + e.getCause  (),HttpStatus.METHOD_FAILURE );
+    }   
+    
 #### Person Entity
 
 Long   id
