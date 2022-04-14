@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bext.webcrud.entity.Person;
-import com.bext.webcrud.exception.EmptyInputException;
 import com.bext.webcrud.service.IPersonService;
 
 import lombok.extern.slf4j.Slf4j;
