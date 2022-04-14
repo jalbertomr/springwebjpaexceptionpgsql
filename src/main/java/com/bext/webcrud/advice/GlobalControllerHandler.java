@@ -18,6 +18,8 @@ import com.bext.webcrud.exception.EmptyInputException;
 import com.bext.webcrud.repo.PersonJpaRepository;
 import com.bext.webcrud.service.PersonServiceImpl;
 
+import lombok.extern.slf4j.Slf4j;
+
 @ControllerAdvice
 public class GlobalControllerHandler extends ResponseEntityExceptionHandler{
 
@@ -46,10 +48,10 @@ public class GlobalControllerHandler extends ResponseEntityExceptionHandler{
 	public ResponseEntity<String> handlePropertyValue(PropertyValueException pve){
 		return new ResponseEntity<String>("Error - " + pve.getMessage(), HttpStatus.BAD_REQUEST);
 	}
-	/*
+	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<String> handlePSQL(Exception e){
-		return new ResponseEntity<String>("Error - " + e.getLocalizedMessage(), HttpStatus.METHOD_FAILURE );
+		return new ResponseEntity<String>("Error - " + e.getLocalizedMessage() + e.getCause(), HttpStatus.METHOD_FAILURE );
 	}
-	*/
+	
 }
