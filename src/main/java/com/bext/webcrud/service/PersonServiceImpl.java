@@ -1,24 +1,15 @@
 package com.bext.webcrud.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.PropertyValueException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.bext.webcrud.entity.Person;
-import com.bext.webcrud.exception.CatchException;
-import com.bext.webcrud.exception.EmptyInputException;
 import com.bext.webcrud.repo.PersonJpaRepository;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 public class PersonServiceImpl implements IPersonService {
 
