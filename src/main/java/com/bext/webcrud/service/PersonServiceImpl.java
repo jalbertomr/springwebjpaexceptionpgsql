@@ -3,6 +3,8 @@ package com.bext.webcrud.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityExistsException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,10 @@ public class PersonServiceImpl implements IPersonService {
 
 	@Override
 	public Person addPerson(Person person) {
+		Optional<Person> personInDB = getById(person.getId());
+		if (personInDB.isPresent()) {
+		   throw new EntityExistsException("Person id already Exist! " + personInDB.get());
+		}
 		return personJpaRepo.save(person);
 	}
 

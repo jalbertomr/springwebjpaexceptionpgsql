@@ -66,7 +66,6 @@ public class PersonController {
 	
 	@PostMapping
 	public ResponseEntity<Person> addPerson(@RequestBody Person person){
-		person.setId(null); 
 		Person newPerson = iPersonService.addPerson( person);
 		return new ResponseEntity<Person>( newPerson, HttpStatus.CREATED);
 	}

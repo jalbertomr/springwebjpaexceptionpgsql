@@ -2,6 +2,8 @@ package com.bext.webcrud.advice;
 
 import java.util.NoSuchElementException;
 
+import javax.persistence.EntityExistsException;
+
 import org.hibernate.PropertyValueException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -47,6 +49,11 @@ public class GlobalControllerHandler extends ResponseEntityExceptionHandler{
 	@ExceptionHandler(PropertyValueException.class)
 	public ResponseEntity<String> handlePropertyValue(PropertyValueException pve){
 		return new ResponseEntity<String>("Error - " + pve.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(EntityExistsException.class)
+	public ResponseEntity<String> handleEntityExist(EntityExistsException eae) {
+		return new ResponseEntity<String>("Error - " + eae.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(Exception.class)
