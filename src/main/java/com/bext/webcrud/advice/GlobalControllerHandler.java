@@ -3,6 +3,7 @@ package com.bext.webcrud.advice;
 import java.util.NoSuchElementException;
 
 import javax.persistence.EntityExistsException;
+import javax.validation.ConstraintViolationException;
 
 import org.hibernate.PropertyValueException;
 import org.springframework.http.HttpHeaders;
@@ -56,9 +57,14 @@ public class GlobalControllerHandler extends ResponseEntityExceptionHandler{
 		return new ResponseEntity<String>("Error - " + eae.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<String> handleConstraintViolation( ConstraintViolationException cve){
+		return new ResponseEntity<String>("Error - " + cve.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<String> handlePSQL(Exception e){
-		return new ResponseEntity<String>("Error - " + e.getLocalizedMessage() + e.getCause(), HttpStatus.METHOD_FAILURE );
+		return new ResponseEntity<String>("Error - " + e.getCause().getCause().getMessage(), HttpStatus.METHOD_FAILURE );
 	}
 	
 }

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.bext.webcrud.entity.Person;
 import com.bext.webcrud.repo.PersonJpaRepository;
 
-
 @Service
 public class PersonServiceImpl implements IPersonService {
 
@@ -30,9 +29,11 @@ public class PersonServiceImpl implements IPersonService {
 
 	@Override
 	public Person addPerson(Person person) {
-		Optional<Person> personInDB = getById(person.getId());
-		if (personInDB.isPresent()) {
-		   throw new EntityExistsException("Person id already Exist! " + personInDB.get());
+		if (person.getId() != null) {
+			Optional<Person> personInDB = getById(person.getId());
+			if (personInDB.isPresent()) {
+				throw new EntityExistsException("Person id already Exist! " + personInDB.get());
+			}
 		}
 		return personJpaRepo.save(person);
 	}
@@ -70,5 +71,5 @@ public class PersonServiceImpl implements IPersonService {
 		}
 		return personToDelete;
 	}
-	
+
 }

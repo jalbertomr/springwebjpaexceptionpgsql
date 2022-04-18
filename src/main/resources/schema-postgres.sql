@@ -12,7 +12,7 @@ CREATE TABLE public.person_jpa
     age integer NOT NULL,
     first_name character varying(255) COLLATE pg_catalog."default" NOT NULL,
     "integer" integer,
-    last_name character varying(255) COLLATE pg_catalog."default",
+    last_name character varying(255) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT person_jpa_pkey PRIMARY KEY (id)
 )
 WITH (
