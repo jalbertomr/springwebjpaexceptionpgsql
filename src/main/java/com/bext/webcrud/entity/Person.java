@@ -14,11 +14,11 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Entity
-@Table(name="person_jpa")
+@Table(name="personjpa")
 @Data
 public class Person {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator="PERSONJPA_SEQ")
 	private Long id;
 	
 	@Column(nullable = false)

@@ -1,6 +1,5 @@
 package com.bext.webcrud.advice;
 
-import java.time.Instant;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,13 +20,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.bext.webcrud.controller.PersonController;
-import com.bext.webcrud.exception.CatchException;
 import com.bext.webcrud.exception.EmptyInputException;
-import com.bext.webcrud.repo.PersonJpaRepository;
-import com.bext.webcrud.service.PersonServiceImpl;
-
-import lombok.extern.slf4j.Slf4j;
 
 @ControllerAdvice
 public class GlobalControllerHandler extends ResponseEntityExceptionHandler {

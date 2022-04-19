@@ -131,3 +131,16 @@ message can be customized for the respective validation
 		Person newPerson = iPersonService.addPerson( person);
 		...
     
+#### Sequence of primary key especified
+
+  The name of the sequence for the primary key (when simple) is specified on @Entity table
+        
+    @Entity
+    @Table(name="personjpa")
+    @Data
+    public class Person {
+     
+    @Id
+	 @GeneratedValue(strategy = GenerationType.AUTO, generator="PERSONJPA_SEQ")
+	 private Long id;
+  
