@@ -3,6 +3,8 @@ package com.bext.webcrud.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,13 +67,13 @@ public class PersonController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Person> addPerson(@RequestBody Person person){
+	public ResponseEntity<Person> addPerson(@Valid @RequestBody Person person){
 		Person newPerson = iPersonService.addPerson( person);
 		return new ResponseEntity<Person>( newPerson, HttpStatus.CREATED);
 	}
 	
 	@PutMapping
-	public ResponseEntity<Optional<Person>> updatePerson(@RequestBody Person person){
+	public ResponseEntity<Optional<Person>> updatePerson(@Valid @RequestBody Person person){
 		Optional<Person> updatedPerson = iPersonService.updatePerson(person);
 		return new ResponseEntity<Optional<Person>>( updatedPerson, (updatedPerson.isEmpty()) ? HttpStatus.NOT_FOUND : HttpStatus.OK);
 	}

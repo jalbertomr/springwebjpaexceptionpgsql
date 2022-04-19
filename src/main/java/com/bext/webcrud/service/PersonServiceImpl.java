@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityExistsException;
+import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,7 @@ public class PersonServiceImpl implements IPersonService {
 
 	@Override
 	public Optional<Person> updatePerson(Person person) {
+		if (person.getId() == null) throw new IllegalArgumentException("Must especify the person Id to update," + person);
 		Optional<Person> retPerson = Optional.empty();
 		if (getById(person.getId()).isPresent()) {
 			retPerson = Optional.of(person);

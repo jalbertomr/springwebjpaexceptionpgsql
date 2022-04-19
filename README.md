@@ -74,3 +74,60 @@ public class GlobalControllerHandler extends ResponseEntityExceptionHandler{
     spring.jpa.hibernate.ddl-auto = none    // does not create database automatically
 
 The sql scripts for tables include the sequence for the primary keys
+
+#### Validation of Fields using javax.validation and handling his Exceptions
+
+To manage the validation on fields with javax.validation use annotations @NotBlank @NotNull @Min() @Max() ...
+message can be customized for the respective validation
+
+    @Entity
+    @Table(name="person_jpa")
+    @Data
+    public class Person {
+	   @Id
+	   @GeneratedValue(strategy = GenerationType.AUTO)
+	   private Long id;
+	
+	   @Column(nullable = false)
+	   @NotBlank @NotNull(message = "firstName cannot be null") 
+	   private String firstName;
+	
+	   @Column(nullable = false)
+	   @NotNull
+	   private String lastName;
+	
+	   @Min(1) @Max(200) 
+	   private int age;
+	
+	   private Integer integer;
+    }
+    
+  To handle this validations add in GlobalControllerHandler which has @ControllerAdvice annotation to manage globally
+  add the method to manage the validation at controller level that uses the @Valid annotation on Controller Method.  
+  
+     	// error to handle @valid
+	   @Override
+	   protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+		LinkedHashMap<Object, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", "");
+		body.put("status", status.value());
+
+		List<String> errors = ex.getBindingResult().getFieldErrors().stream()
+				.map(x -> x.getField() + ": " + x.getDefaultMessage())
+				.map(x -> x + ", " + new Date())
+				.collect(Collectors.toList());
+
+		body.put("errors", errors);
+
+		return new ResponseEntity<>( errors, headers, status);
+	  }
+	  
+ In Controller Method
+ 
+    @PostMapping
+	 public ResponseEntity<Person> addPerson(@Valid @RequestBody Person person){
+		Person newPerson = iPersonService.addPerson( person);
+		...
+    
