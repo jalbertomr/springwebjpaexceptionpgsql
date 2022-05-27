@@ -1,13 +1,14 @@
-## Spring Web jpa Person with exceptions
+## Spring Web jpa Person with exceptions, profiles for H2, Postgresql, initialization of tables by properties data.sql
 
 Application of person with operations CRUD using JPARepository with Global Exception handling
+Initialization of tables by application.resources and profiles
 
 ## Profiles Used
 
   h2Initdata
   pgsqlInitdata
   
-###  Using profile h2InitData then files used
+###  Using profile h2InitData then sql files used to init data
   
   application.properties
   application-h2InitData.properties
@@ -17,7 +18,7 @@ Application of person with operations CRUD using JPARepository with Global Excep
   
   In properties file is configured spring.sql.init.platform=h2
   
-###  Using profile pgsqlInitdata then files used
+###  Using profile pgsqlInitdata then sql files used to init data
   
   application.properties
   application-pgsqlInitdata.properties
