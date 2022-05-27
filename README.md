@@ -1,4 +1,4 @@
-## [Spring Web jpa Person with Global Exception Handler, Profiles for H2, Postgresql](https://github.com/jalbertomr/springwebjpaexceptionpgsql/tree/GlobalExceptionsHandling).
+## [Spring Web jpa Person with Global Exception Handler, Profiles for H2, Postgresql. table init by properties data.sql](https://github.com/jalbertomr/springwebjpaexceptionpgsql/tree/GlobalExceptionsHandling).
 
 ## Spring Web jpa Person with exceptions on Postgresql
 
