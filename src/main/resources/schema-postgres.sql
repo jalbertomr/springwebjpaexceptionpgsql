@@ -1,8 +1,8 @@
 -- Table: public.personjpa
 
-DROP TABLE if exists public.person_jpa cascade;
+DROP TABLE if exists public.personjpa cascade;
 
-DROP SEQUENCE if exists public.personjpa_sequence;
+DROP SEQUENCE if exists public.personjpa_sequence cascade;
 
 CREATE SEQUENCE public.personjpa_sequence;
 

@@ -18,7 +18,7 @@ import lombok.Data;
 @Data
 public class Person {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator="PERSONJPA_SEQ")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator="PERSONJPA_SEQUENCE")
 	private Long id;
 	
 	@Column(nullable = false)
